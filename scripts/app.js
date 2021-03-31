@@ -14,7 +14,81 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+const TURMA = 'turmaA'
+
 let db = firebase.firestore();
+
+
+// // Add adicona um novo documento na colletcion desejada e insere Id automático
+// db.collection(TURMA).add({
+//     nome: 'Junior',
+//     sobrenome: 'Batista',
+//     notas: {nota1: 5, nota2: 2},
+// }).then(doc=>{
+//     console.log('inserido com sucesso', doc.id)
+// }).catch(erro=>{
+//     console.log(erro)
+// })
+
+// // Set da a opção de criar um novo documento setando o id e sobrescreve todo o documento, porem se colocar o objeto merge no final, nao sobrescreve, só atualiza ou cria novo documento.
+// db.collection(TURMA).doc('k24P1urRYPyTq6hSKkqW').set(
+//     {
+//         nome:'Adear'
+//     },{merge:true}
+//     ).then(doc=>{
+//         console.log('inserido')
+//     })
+
+// Update só atualiza o campo escrito (se for atualizar maps colocar entre aspas)
+db.collection(TURMA).doc('k24P1urRYPyTq6hSKkqW').update(
+    {
+        'notas.nota1': 5,
+        cidades: firebase.firestore.FieldValue.arrayUnion('PB','AM'),
+        faltas:firebase.firestore.FieldValue.increment(5),
+
+        // arrayRemove para remover itens da array
+        // Para decrementar e só passar assim increment(-5)
+        // Para deletar todo o documento é so trocar o método update por delete.
+    }
+    ).then(doc=>{
+        console.log('inserido')
+    }).catch(erro=>{
+        console.log(erro)
+    })
+
+// db.collection(TURMA).doc('MgpQP1yWU5EFI6997WwQ').set(
+//     {
+//         notas: {nota1: 6.5, nota2:9.2},
+// }
+// ,{merge:true}
+// ).then(doc=>{
+//     console.log('inserido com sucesso')
+
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // // Ler todos os dados da coleção 
@@ -55,10 +129,10 @@ let db = firebase.firestore();
 // })
 
 
-db.collection('turmaA').where('idade', '<=', 23).get().then( snapshot =>{
-    snapshot.forEach(doc =>{
-        let alunos = doc.data()
-        console.log(alunos.nome, alunos.idade)
-    })
-})
+// db.collection('turmaA').where('idade', '<=', 23).get().then( snapshot =>{
+//     snapshot.forEach(doc =>{
+//         let alunos = doc.data()
+//         console.log(alunos.nome, alunos.idade)
+//     })
+// })
 
