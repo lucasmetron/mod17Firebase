@@ -15,13 +15,12 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 let db = firebase.firestore();
-let alunos = [];
+
 
 // // Ler todos os dados da coleção 
 // db.collection("turmaA").get().then((snapshot) => {
 //     snapshot.forEach((doc) => {
 //         let aluno = doc.data();
-//         alunos.push(aluno);
 //         console.log(aluno.nome)
 //         console.log(aluno.notas)
 //         console.log(aluno.advertencias)
@@ -30,30 +29,36 @@ let alunos = [];
 // })
 
 
-//Ler um aluno especifico 
-let docref = db.collection("turmaA").doc("zL4aqxTDjBSP25GGova8");
-docref.get().then((doc)=>{
-    let aluno = doc.data();
+// //Ler um aluno especifico 
+// let docref = db.collection("turmaA").doc("zL4aqxTDjBSP25GGova8");
+// docref.get().then((doc)=>{
+//     let aluno = doc.data();
 
-    console.log(aluno.nome)
+//     console.log(aluno.nome)
+// })
+
+// let docref2 = db.collection("turmaA").doc("rKspn6TRtaBpkjFQLF8z");
+
+// docref2.get().then((doc)=>{
+//     let aluno =doc.data().nome
+//     console.log(aluno)
+// })
+
+// let docref3 = db.collection("turmaA").doc("selina");
+
+// docref3.get().then((doc)=>{
+//     let aluno = doc.data();
+//     console.log(`Aluno(a): ${aluno.nome}
+//                  Primeira nota: ${aluno.notas.nota1}
+//                  Segunda nota: ${aluno.notas.nota2}
+//                  Média: ${(aluno.notas.nota1 + aluno.notas.nota2) / 2}`)
+// })
+
+
+db.collection('turmaA').where('idade', '<=', 23).get().then( snapshot =>{
+    snapshot.forEach(doc =>{
+        let alunos = doc.data()
+        console.log(alunos.nome, alunos.idade)
+    })
 })
-
-let docref2 = db.collection("turmaA").doc("rKspn6TRtaBpkjFQLF8z");
-
-docref2.get().then((doc)=>{
-    let aluno =doc.data().nome
-    console.log(aluno)
-})
-
-let docref3 = db.collection("turmaA").doc("selina");
-
-docref3.get().then((doc)=>{
-    let aluno = doc.data();
-    console.log(`Aluno(a): ${aluno.nome}
-                 Primeira nota: ${aluno.notas.nota1}
-                 Segunda nota: ${aluno.notas.nota2}
-                 Média: ${(aluno.notas.nota1 + aluno.notas.nota2) / 2}`)
-})
-
-
 
