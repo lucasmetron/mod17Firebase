@@ -15,9 +15,52 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const TURMA = 'turmaA'
-
 let db = firebase.firestore();
 
+//OnSnapShot para toda a collection 
+db.collection(TURMA).onSnapshot(snapshot =>{
+    snapshot.forEach((doc, i)=>{
+        let aluno = doc.data().nome;
+        console.log(aluno)
+    })
+})
+
+//Onsnapshat para usuário em especifico 
+db.collection(TURMA).doc('selina').onSnapshot(doc=>{
+    let aluno = doc.data();
+    console.log(aluno)});
+
+
+//Onsnapshot para usuário especifico com WHERE
+db.collection(TURMA).where('idade', '<', 25 ).onSnapshot(snapshot =>{
+    snapshot.forEach(doc=>{
+        let aluno = doc.data();
+        console.log(aluno.nome, aluno.idade)
+    })
+
+})
+
+
+
+
+
+// console.log(alunos[0])
+
+// const TURMA = 'turmaA'
+// let alunos = [];
+// let db = firebase.firestore();
+
+// db.collection(TURMA).get().then(snapshot =>{
+//     snapshot.forEach((doc, i)=>{
+//         let aluno = doc.data().nome;
+//         alunos.push(aluno)
+//     })
+// }).catch(erro=>{
+//     console.log(erro)
+// })
+
+
+// console.log(alunos[0])
 
 // // Add adicona um novo documento na colletcion desejada e insere Id automático
 // db.collection(TURMA).add({
@@ -40,31 +83,22 @@ let db = firebase.firestore();
 //     })
 
 // Update só atualiza o campo escrito (se for atualizar maps colocar entre aspas)
-db.collection(TURMA).doc('k24P1urRYPyTq6hSKkqW').update(
-    {
-        'notas.nota1': 5,
-        cidades: firebase.firestore.FieldValue.arrayUnion('PB','AM'),
-        faltas:firebase.firestore.FieldValue.increment(5),
-
-        // arrayRemove para remover itens da array
-        // Para decrementar e só passar assim increment(-5)
-        // Para deletar todo o documento é so trocar o método update por delete.
-    }
-    ).then(doc=>{
-        console.log('inserido')
-    }).catch(erro=>{
-        console.log(erro)
-    })
-
-// db.collection(TURMA).doc('MgpQP1yWU5EFI6997WwQ').set(
+// db.collection(TURMA).doc('k24P1urRYPyTq6hSKkqW').update(
 //     {
-//         notas: {nota1: 6.5, nota2:9.2},
-// }
-// ,{merge:true}
-// ).then(doc=>{
-//     console.log('inserido com sucesso')
+//         'notas.nota1': 5,
+//         cidades: firebase.firestore.FieldValue.arrayUnion('PB','AM'),
+//         faltas:firebase.firestore.FieldValue.increment(5),
 
-// })
+//         // arrayRemove para remover itens da array
+//         // Para decrementar e só passar assim increment(-5)
+//         // Para deletar todo o documento é so trocar o método update por delete.
+//     }
+//     ).then(doc=>{
+//         console.log('inserido')
+//     }).catch(erro=>{
+//         console.log(erro)
+//     })
+
 
 
 
