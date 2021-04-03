@@ -17,47 +17,100 @@ firebase.analytics();
 const TURMA = 'turmaA'
 let db = firebase.firestore();
 
-//OnSnapShot para toda a collection 
-db.collection(TURMA).onSnapshot(snapshot =>{
-    snapshot.forEach((doc, i)=>{
+
+db.collection(TURMA).get().then(snapshot =>{
+    snapshot.forEach(doc=>{
         let aluno = doc.data().nome;
-        console.log(aluno)
+
+        // console.log(aluno)
     })
 })
 
-//Onsnapshat para usuário em especifico 
-db.collection(TURMA).doc('selina').onSnapshot(doc=>{
-    let aluno = doc.data();
-    console.log(aluno)});
+db.collection(TURMA).doc('MgpQP1yWU5EFI6997WwQ').get().then(snapshot=>{
+    let aluno = snapshot.data();
 
+    // console.log(`Nome: ${aluno.nome} 
+    // Sobrenome: ${aluno.sobrenome}
+    // idade: ${snapshot.data().idade}`)
 
-//Onsnapshot para usuário especifico com WHERE
-db.collection(TURMA).where('idade', '<', 25 ).onSnapshot(snapshot =>{
+})
+
+db.collection(TURMA).where('idade', '<=', 35 ).get().then(snapshot=>{
     snapshot.forEach(doc=>{
         let aluno = doc.data();
-        console.log(aluno.nome, aluno.idade)
-    })
 
+        // console.log(aluno.nome, aluno.idade )
+    })
 })
 
+let addAluno = (colecao, nome, sobrenome, idade, n1, n2) =>{
+
+    db.collection(colecao).add(
+        {
+            nome: nome,
+            Sobrenome: sobrenome,
+            idade: idade,
+            notas: {nota1: n1, nota2: n2}
+        }).then(doc=>{
+            console.log('inserido', doc.id)
+        }).catch(erro=>{
+            console.log(erro)
+        })
+
+} 
+
+addAluno(TURMA, 'Lara','Helena',6, 5,9);
+
+// db.collection(TURMA).doc('Jonas').update(
+//     {
+//         Sobrenome: "Gomes",
+     
+//     }).then(doc=>{
+//         console.log('inserido', doc)
+//     }).catch(erro=>{
+//         console.log(erro)
+//     })
 
 
 
-
-// console.log(alunos[0])
-
-// const TURMA = 'turmaA'
-// let alunos = [];
-// let db = firebase.firestore();
-
-// db.collection(TURMA).get().then(snapshot =>{
+// //OnSnapShot para toda a collection 
+// db.collection(TURMA).onSnapshot(snapshot =>{
 //     snapshot.forEach((doc, i)=>{
 //         let aluno = doc.data().nome;
+//         console.log(aluno)
+//     })
+// })
+
+// //Onsnapshat para usuário em especifico 
+// db.collection(TURMA).doc('selina').onSnapshot(doc=>{
+//     let aluno = doc.data();
+//     console.log(aluno)});
+
+
+// //Onsnapshot para usuário especifico com WHERE
+// db.collection(TURMA).where('idade', '<', 25 ).onSnapshot(snapshot =>{
+//     snapshot.forEach(doc=>{
+//         let aluno = doc.data();
+//         console.log(aluno.nome, aluno.idade)
+//     })
+
+// })
+
+
+
+
+
+
+// db.collection(TURMA).get().then(snapshot =>{
+//     snapshot.forEach((doc)=>{
+//         let aluno = doc.data();
 //         alunos.push(aluno)
 //     })
 // }).catch(erro=>{
 //     console.log(erro)
 // })
+
+// console.log(alunos[0])
 
 
 // console.log(alunos[0])
@@ -169,4 +222,3 @@ db.collection(TURMA).where('idade', '<', 25 ).onSnapshot(snapshot =>{
 //         console.log(alunos.nome, alunos.idade)
 //     })
 // })
-
