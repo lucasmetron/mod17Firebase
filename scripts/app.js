@@ -16,6 +16,73 @@ firebase.analytics();
 
 const TURMA = 'turmaA'
 let db = firebase.firestore();
+let auth = firebase.auth()
+let email = 'novoteste@teste.com';
+let senha = '123abc';
+
+
+// login();
+
+// function login(){
+
+//     auth.signInWithEmailAndPassword(email, senha).then(loggedUser=>{
+//         console.log(auth.currentUser);
+//     }).catch(erro=>{
+//         console.log(erro)
+//     })
+
+//     // let user = auth.currentUser;
+//     // console.log(user)
+// }
+
+function login (){
+     auth.signInWithEmailAndPassword(email, senha)
+     .then(loggedUser=>{
+        // console.log(auth.currentUser)
+     }).catch(erro=>{
+        console.log(erro)
+     })
+
+
+}
+
+login();
+
+let user = auth.currentUser;
+console.log(user)
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log(user)
+    } else {
+        console.log("ninguem logado")
+    }
+})
+
+function logout() {
+    auth.signOut().
+        then(obj => {
+            console.log(obj);
+        }).catch(erro => {
+            console.log(erro)
+        });
+}
+setTimeout(logout, 2000)
+
+
+
+// criarUsuário('lais@pinheiro.com', '123456')
+
+//creado usuário no Authentication Firebase
+function criarUsuário(email, senha) {
+    auth.createUserWithEmailAndPassword(email, senha)
+        .then(user => {
+            alert("usuario criado com sucesso", user)
+        }).catch(erro => {
+            alert(erro.message)
+            console.log(erro.code, erro.message)
+        })
+}
 
 
 // db.collection(TURMA).get().then(snapshot =>{
@@ -43,55 +110,21 @@ let db = firebase.firestore();
 //     })
 // })
 
-let addAluno = (colecao, nome, sobrenome, idade, n1, n2) =>{
+let addAluno = (colecao, nome, sobrenome, idade, n1, n2) => {
 
     db.collection(colecao).add(
         {
             nome: nome,
             sobrenome: sobrenome,
             idade: idade,
-            notas: {nota1: n1, nota2: n2}
-        }).then(doc=>{
+            notas: { nota1: n1, nota2: n2 }
+        }).then(doc => {
             console.log('inserido', doc.id)
-        }).catch(erro=>{
+        }).catch(erro => {
             console.log(erro)
         })
 
-} 
-
-// db.collection(TURMA).doc('selina').onSnapshot(snapshot=>{
-    
-  
-//         let aluno = snapshot.data();
-
-//         console.log(aluno)
-
-// })
-
-
-//Deletando um documento inteiro
-db.collection(TURMA).doc('2k51aSMDD9qz26gUBw0C').delete().then(
-    console.log('documento deletado')
-).catch(erro=>{
-    console.log(erro)
-})
-
-//Deletando um campo de um documento em especifico
-db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
-    advertencias: firebase.firestore.FieldValue.delete(),
-})
-
-
-
-// db.collection(TURMA).onSnapshot(snapshot =>{
-   
-
-//     snapshot.forEach(doc=>{
-//         let aluno = doc.data();
-
-//         console.log(aluno.nome)
-//     })
-// })
+}
 
 
 
@@ -100,7 +133,7 @@ db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
 // db.collection(TURMA).doc('Jonas').update(
 //     {
 //         Sobrenome: "Gomes",
-     
+
 //     }).then(doc=>{
 //         console.log('inserido', doc)
 //     }).catch(erro=>{
@@ -133,25 +166,7 @@ db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
 // })
 
 
-
-
-
-
-// db.collection(TURMA).get().then(snapshot =>{
-//     snapshot.forEach((doc)=>{
-//         let aluno = doc.data();
-//         alunos.push(aluno)
-//     })
-// }).catch(erro=>{
-//     console.log(erro)
-// })
-
-// console.log(alunos[0])
-
-
-// console.log(alunos[0])
-
-// // Add adicona um novo documento na colletcion desejada e insere Id automático
+// // Add um novo documento na colletcion desejada e insere Id automático
 // db.collection(TURMA).add({
 //     nome: 'Junior',
 //     sobrenome: 'Batista',
@@ -187,30 +202,6 @@ db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
 //     }).catch(erro=>{
 //         console.log(erro)
 //     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -257,4 +248,16 @@ db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
 //         let alunos = doc.data()
 //         console.log(alunos.nome, alunos.idade)
 //     })
+// })
+
+// //Deletando um documento inteiro
+// db.collection(TURMA).doc('2k51aSMDD9qz26gUBw0C').delete().then(
+//     console.log('documento deletado')
+// ).catch(erro=>{
+//     console.log(erro)
+// })
+
+// //Deletando um campo de um documento em especifico
+// db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
+//     advertencias: firebase.firestore.FieldValue.delete(),
 // })
