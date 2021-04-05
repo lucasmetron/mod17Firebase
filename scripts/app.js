@@ -18,37 +18,37 @@ const TURMA = 'turmaA'
 let db = firebase.firestore();
 
 
-db.collection(TURMA).get().then(snapshot =>{
-    snapshot.forEach(doc=>{
-        let aluno = doc.data().nome;
+// db.collection(TURMA).get().then(snapshot =>{
+//     snapshot.forEach(doc=>{
+//         let aluno = doc.data().nome;
 
-        // console.log(aluno)
-    })
-})
+//         // console.log(aluno)
+//     })
+// })
 
-db.collection(TURMA).doc('MgpQP1yWU5EFI6997WwQ').get().then(snapshot=>{
-    let aluno = snapshot.data();
+// db.collection(TURMA).doc('MgpQP1yWU5EFI6997WwQ').get().then(snapshot=>{
+//     let aluno = snapshot.data();
 
-    // console.log(`Nome: ${aluno.nome} 
-    // Sobrenome: ${aluno.sobrenome}
-    // idade: ${snapshot.data().idade}`)
+//     // console.log(`Nome: ${aluno.nome} 
+//     // Sobrenome: ${aluno.sobrenome}
+//     // idade: ${snapshot.data().idade}`)
 
-})
+// })
 
-db.collection(TURMA).where('idade', '<=', 35 ).get().then(snapshot=>{
-    snapshot.forEach(doc=>{
-        let aluno = doc.data();
+// db.collection(TURMA).where('nome', '<=', 'a' ).get().then(snapshot=>{
+//     snapshot.forEach(doc=>{
+//         let aluno = doc.data();
 
-        // console.log(aluno.nome, aluno.idade )
-    })
-})
+//         console.log(aluno.sobrenome)
+//     })
+// })
 
 let addAluno = (colecao, nome, sobrenome, idade, n1, n2) =>{
 
     db.collection(colecao).add(
         {
             nome: nome,
-            Sobrenome: sobrenome,
+            sobrenome: sobrenome,
             idade: idade,
             notas: {nota1: n1, nota2: n2}
         }).then(doc=>{
@@ -59,7 +59,43 @@ let addAluno = (colecao, nome, sobrenome, idade, n1, n2) =>{
 
 } 
 
-addAluno(TURMA, 'Lara','Helena',6, 5,9);
+// db.collection(TURMA).doc('selina').onSnapshot(snapshot=>{
+    
+  
+//         let aluno = snapshot.data();
+
+//         console.log(aluno)
+
+// })
+
+
+//Deletando um documento inteiro
+db.collection(TURMA).doc('2k51aSMDD9qz26gUBw0C').delete().then(
+    console.log('documento deletado')
+).catch(erro=>{
+    console.log(erro)
+})
+
+//Deletando um campo de um documento em especifico
+db.collection(TURMA).doc('rKspn6TRtaBpkjFQLF8z').update({
+    advertencias: firebase.firestore.FieldValue.delete(),
+})
+
+
+
+// db.collection(TURMA).onSnapshot(snapshot =>{
+   
+
+//     snapshot.forEach(doc=>{
+//         let aluno = doc.data();
+
+//         console.log(aluno.nome)
+//     })
+// })
+
+
+
+// addAluno(TURMA, 'Leticia','Pinheiro',26, 7,6);
 
 // db.collection(TURMA).doc('Jonas').update(
 //     {
