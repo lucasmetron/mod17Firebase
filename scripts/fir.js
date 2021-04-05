@@ -13,7 +13,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 let db = firebase.firestore();
-
+let auth = firebase.auth();
 
 
 
@@ -31,19 +31,48 @@ let ler = () =>{
     })
 }
 
-let escrever = ()=>{
+let escrever = (obj)=>{
     db.collection('lista').add(
         {
-            title: "Novo objeto",
+            title: obj,
             numero: Math.random()*10
         }
         )
         .then(doc=>{
-            console.log(doc)
+            console.log("documento salvo")
         })
         .catch(erro =>{
             console.log(erro)
         })
 }
 
-ler();
+
+let logar = () =>{
+
+    let usuario = "lucasmetron@gmail.com";
+    let senha = "32013454"
+
+    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>{
+        auth.signInWithEmailAndPassword(usuario, senha)
+        .then(logado =>{
+            console.log("login com sucesso")
+            escrever("moto")
+        }).catch(erro=>{
+            console.log(erro)
+        })
+    })
+}
+
+let deslogar = () =>{
+    auth.signOut().
+    then(obj => {
+        console.log("usuário foi deslogado");
+    }).catch(erro => {
+        console.log(erro)
+    });
+}
+
+
+// logar();
+// deslogar();
+escrever("teste");
