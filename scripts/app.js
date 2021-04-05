@@ -1,73 +1,101 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-var firebaseConfig = {
-    apiKey: "AIzaSyAx0-lAbOtnTgq56QUFVA8f-88WTUbjDyM",
-    authDomain: "colegio-a4784.firebaseapp.com",
-    projectId: "colegio-a4784",
-    storageBucket: "colegio-a4784.appspot.com",
-    messagingSenderId: "19012523176",
-    appId: "1:19012523176:web:23e4b855eb38429dd31e9d",
-    measurementId: "G-1DF53Y8Q4Q"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-const TURMA = 'turmaA'
-let db = firebase.firestore();
-let auth = firebase.auth()
-let email = 'novoteste@teste.com';
-let senha = '123abc';
+// var firebaseConfig = {
+//     apiKey: "AIzaSyAx0-lAbOtnTgq56QUFVA8f-88WTUbjDyM",
+//     authDomain: "colegio-a4784.firebaseapp.com",
+//     projectId: "colegio-a4784",
+//     storageBucket: "colegio-a4784.appspot.com",
+//     messagingSenderId: "19012523176",
+//     appId: "1:19012523176:web:23e4b855eb38429dd31e9d",
+//     measurementId: "G-1DF53Y8Q4Q"
+// };
 
 
-// login();
+// firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
 
-// function login(){
+// const TURMA = 'turmaA'
+// let db = firebase.firestore();
+// let auth = firebase.auth()
+// let email = 'novoteste@teste.com';
+// let senha = '123abc';
 
-//     auth.signInWithEmailAndPassword(email, senha).then(loggedUser=>{
-//         console.log(auth.currentUser);
-//     }).catch(erro=>{
-//         console.log(erro)
-//     })
 
-//     // let user = auth.currentUser;
-//     // console.log(user)
-// }
 
-function login (){
-     auth.signInWithEmailAndPassword(email, senha)
-     .then(loggedUser=>{
-        // console.log(auth.currentUser)
-     }).catch(erro=>{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function login() {
+
+    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+
+        auth.signInWithEmailAndPassword(email, senha)
+            .then(loggedUser => {
+                console.log(auth.currentUser)
+            }).catch(erro => {
+                console.log(erro)
+            })
+    }).catch(erro => {
         console.log(erro)
-     })
+    })
+
 
 
 }
 
-login();
+// let user = auth.currentUser;
+// console.log(user)
 
-let user = auth.currentUser;
-console.log(user)
-
-auth.onAuthStateChanged(user => {
-    if (user) {
-        console.log(user)
-    } else {
-        console.log("ninguem logado")
-    }
-})
+// auth.onAuthStateChanged(user => {
+//     if (user) {
+//         console.log("usuário logado", user)
+//     } else {
+//         console.log("ninguem logado")
+//     }
+// })
 
 function logout() {
     auth.signOut().
         then(obj => {
-            console.log(obj);
+            console.log("usuário foi deslogado");
         }).catch(erro => {
             console.log(erro)
         });
 }
-setTimeout(logout, 2000)
+// setTimeout(login, 2000)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
